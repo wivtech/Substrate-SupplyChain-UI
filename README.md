@@ -1,6 +1,7 @@
 # WiV Supply Chain UI
 
 The frontend UI for the WiV Supply Chain. UI is based on Substrate Front End Template.
+Adding modules for handling assets, roles and flows.
 
 ## Substrate Front End Template
 
