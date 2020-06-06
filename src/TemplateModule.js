@@ -31,7 +31,7 @@ export default function ProofOfExistence (props) {
       .map((b) => b.toString(16).padStart(2, '0'))
       .join('');
 
-    const hash = 'Hahaha, bare tull'; // blake2AsHex(content, 256); 
+    const hash = 'Hahaha, bare tull'; // blake2AsHex(content, 256);
     setDigest(hash);
   };
 
@@ -49,15 +49,17 @@ export default function ProofOfExistence (props) {
     // Polkadot-JS API query to the `proofs` storage item in our pallet.
     // This is a subscription, so it will always get the latest value,
     // even if it changes.
-    api.query.assethandlerModule
-      .proofs(digest, (result) => {
-        // Our storage item returns a tuple, which is represented as an array.
-        setOwner(result[0].toString());
-        setBlock(result[1].toNumber());
-      })
-      .then((unsub) => {
-        unsubscribe = unsub;
-      });
+    if (api.query.assethandlerModule && api.query.assethandlerModule.proofs) {
+      api.query.assethandlerModule
+          .proofs(digest, (result) => {
+            // Our storage item returns a tuple, which is represented as an array.
+            setOwner(result[0].toString());
+            setBlock(result[1].toNumber());
+          })
+          .then((unsub) => {
+            unsubscribe = unsub;
+          });
+    }
 
     return () => unsubscribe && unsubscribe();
     // This tells the React hook to update whenever the file digest changes
