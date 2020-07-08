@@ -5,22 +5,21 @@
   "author": "Parity Technologies <admin@parity.io>",
   "license": "Unlicense",
   "dependencies": {
-    "@polkadot/api": "^1.13.1",
-    "@polkadot/extension-dapp": "^0.24.1",
-    "@polkadot/keyring": "^2.9.1",
-    "@polkadot/react-identicon": "^0.52.1",
-    "@polkadot/ui-keyring": "^0.52.1",
-    "@polkadot/util": "^2.9.1",
-    "@polkadot/util-crypto": "^2.9.1",
-    "big.js": "^5.2.2",
+    "@polkadot/api": "^1.17.2",
+    "@polkadot/extension-dapp": "^0.25.1",
+    "@polkadot/types": "^1.17.2",
+    "@polkadot/ui-keyring": "^0.53.1",
+    "@polkadot/ui-settings": "^0.53.1",
+    "@polkadot/util": "^2.12.2",
+    "@polkadot/util-crypto": "^2.12.2",
     "prop-types": "^15.7.2",
     "query-string": "^6.11.0",
     "react": "^16.12.0",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.12.0",
     "react-scripts": "3.2.0",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.88.0",
-    "toformat": "^2.0.0"
+    "semantic-ui-react": "^0.88.0"
   },
   "devDependencies": {
     "eslint-config-standard": "^14.1.0",
@@ -32,7 +31,7 @@
     "gh-pages": "^2.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=8000 react-scripts start",
     "build": "react-scripts build",
     "test": "CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
