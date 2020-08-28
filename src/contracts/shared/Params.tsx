@@ -1,7 +1,3 @@
-// Copyright 2017-2020 @polkadot/app-contracts authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
-
 import { ContractABIFnArg } from '@polkadot/api-contract/types';
 import { TypeDef } from '@polkadot/types/types';
 import { RawParams } from '@polkadot/react-params/types';
