@@ -1,7 +1,9 @@
 {
   "CUSTOM_TYPES": {
     "Address": "AccountId",
-    "LookupSource": "AccountId"
+    "LookupSource": "AccountId",
+    "String": "Text",
+    "Vec": "Text"
   },
   "PROVIDER_SOCKET": "ws://127.0.0.1:9944"
 }

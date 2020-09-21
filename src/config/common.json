@@ -1,5 +1,6 @@
 {
-  "APP_NAME": "substrate-front-end-tutorial",
+  "APP_NAME": "WiV blockchain Dapp",
   "DEVELOPMENT_KEYRING": true,
-  "RPC": {}
+  "RPC": {},
+  "TOKEN_CONTRACT_ADDRESS": "5DcAM3HdfufEtLoCqWZuwV8J9MLXcJsbigjgJv9mK8VaaBHp"
 }

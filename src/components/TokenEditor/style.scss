@@ -1,0 +1,48 @@
+.token-editor-title {
+  flex: 0 0 auto !important;
+}
+
+.token-editor {
+  flex: 1 !important;
+  min-height: 400px;
+}
+
+.token-editor__metadata{
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+  height: 350px;
+  overflow: auto;
+}
+
+.token-editor__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid grey;
+  width: 100%;
+  height: 350px;
+
+  .token-editor__image__img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.token-editor__map {
+  width: 100%;
+  height: 300px;
+
+  .leaflet-container {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.token-editor__sensors {
+  width: 100%;
+  height: 300px;
+}

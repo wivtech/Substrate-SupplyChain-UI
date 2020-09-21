@@ -1,0 +1,13 @@
+// Mixins to be used in component styles, only include scss level, which does not pollute result css
+//  For example, do not include classes, which will be included in every components and results duplicated definition in
+//   result css
+//  Import scss mixins and variables
+
+// Import 3rd party
+@import "../bootstrap-4.3.1/_functions";
+@import "../bootstrap-4.3.1/_variables";
+@import "../bootstrap-4.3.1/mixins/_breakpoints";
+
+// Import customs
+@import "./variables";
+@import "./colors";

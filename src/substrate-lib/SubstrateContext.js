@@ -2,7 +2,8 @@ import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import queryString from 'query-string';
-import config from '../config';
+
+import config from 'config';
 
 const parsedQuery = queryString.parse(window.location.search);
 const connectedSocket = parsedQuery.rpc || config.PROVIDER_SOCKET;
@@ -16,11 +17,20 @@ const INIT_STATE = {
   keyringState: null,
   api: null,
   apiError: null,
-  apiState: null
+  apiState: null,
+  // Smart contract
+  tokenContract: null,
+  tokenContractAbi: null,
+  tokenContractState: null,
+  // Account
+  accountAddress: null,
+  accountPair: null
 };
 
 const reducer = (state, action) => {
   let socket = null;
+
+  console.log(`Action: ${action.type}`);
 
   switch (action.type) {
     case 'RESET_SOCKET':
@@ -41,6 +51,19 @@ const reducer = (state, action) => {
 
     case 'KEYRING_ERROR':
       return { ...state, keyring: null, keyringState: 'ERROR' };
+
+    case 'KEYRING_NO_ACCOUNTS':
+      return { ...state, keyringState: 'NO_ACCOUNTS' };
+
+    case 'SET_CONTRACT_DATA':
+      console.log('ACTION: SetContractData', action.payload.tokenContract);
+      return { ...state, ...action.payload };
+
+    case 'CONTRACT_ERROR':
+      return { ...state, tokenContractState: 'ERROR' };
+
+    case 'SET_ACCOUNT_ADDRESS':
+      return { ...state, accountAddress: action.payload.accountAddress, accountPair: action.payload.accountPair };
 
     default:
       throw new Error(`Unknown type: ${action.type}`);

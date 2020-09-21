@@ -1,4 +1,6 @@
 import configCommon from './common.json';
+import BN from 'bn.js';
+
 // Using `require` as `import` does not support dynamic loading (yet).
 const configEnv = require(`./${process.env.NODE_ENV}.json`);
 
@@ -13,5 +15,9 @@ const envVars = envVarNames.reduce((mem, n) => {
   return mem;
 }, {});
 
-const config = { ...configCommon, ...configEnv, ...envVars };
+// Contract call endowments;
+const endowment = new BN('1000000000000000');
+const weight = new BN('1000000000000');
+
+const config = { ...configCommon, ...configEnv, ...envVars, callParams: { endowment, weight } };
 export default config;
