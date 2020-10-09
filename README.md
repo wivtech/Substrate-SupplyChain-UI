@@ -1,118 +1,79 @@
-# Substrate Front End Template
+# Wiv token React frontend
 
-This template allows you to create a front-end application that connects to a
-[Substrate](https://github.com/paritytech/substrate) node back-end with minimal
-configuration. To learn about Substrate itself, visit the
-[Substrate Developer Hub](https://substrate.dev).
+First make sure backend node is running and token contract is deployed.
 
-The template is built with [Create React App](https://github.com/facebook/create-react-app)
-and [Polkadot js API](https://polkadot.js.org/api/). Familiarity with these tools
-will be helpful, but the template strives to be self-explanatory. To learn how
-this template was built, visit the
-[Substrate Front-End Tutorial](https://substrate.dev/docs/en/tutorials/substrate-front-end/).
+You can build contract on your own or use already built files in `/src/contract-abi`.
 
-## Using The Template
+You can deploy contract using [Polkadot Apps](https://polkadot.js.org/apps/).
+Please check node repository for more details.
 
-### Installation
+## Running project
 
-The code can be installed using [git](https://git-scm.com/) and [yarn](https://yarnpkg.com/).
+### Run project in development mode
 
-```bash
-# Clone the repository
-git clone https://github.com/substrate-developer-hub/substrate-front-end-template.git
-cd ./substrate-front-end-template
-yarn install
-```
+1. Install `node`, `yarn`.
+2. Clone repository and install dependencies with `yarn install`.
+3. Update token contract address configuration at `/src/config/common.json`, update `TOKEN_CONTRACT_ADDRESS` with the address of token contract deployed.
+4. Change blockchain node websocket server url in `development.json`, update `PROVIDER_SOCKET` value.
+5. Start project by `yarn start`.
 
-## Usage
+### Build project in production mode
 
-You can start the template in development mode to connect to a locally running node
+1. Install `node`, `yarn`.
+2. Clone repository and install dependencies with `yarn install`.
+3. Update token contract address configuration at `/src/config/common.json`, update `TOKEN_CONTRACT_ADDRESS` with the address of token contract deployed.
+4. Change blockchain node websocket server url in `production.json`, update `PROVIDER_SOCKET` value to production server's websocket url.
+5. Build project by `yarn build`.
+6. Deploy result static files to frontend server.
 
-```bash
-yarn start
-```
+## Interacting with UI
 
-You can also build the app in production mode,
+### Login with Polkadot chrome extension
+You should install polkadot js extension, which is similar to metamask ethereum extension.
 
-```bash
-yarn build
-```
-and open `build/index.html` in your favorite browser.
+[Install in Chrome webstore](https://chrome.google.com/webstore/detail/mopnmbcafieddcagagdcbnhejhlodfdd)
 
-## Configuration
+Once you open the application, you will be asked to authorize app in polkadot extension, just allow it.
 
-The template's configuration is stored in the `src/config` directory, with
-`common.json` being loaded first, then the environment-specific json file,
-and finally environment variables, with precedence.
+Main UI:
+<img src="https://res.cloudinary.com/soapbravowork/image/upload/v1602202710/Wiv%20Wiki/2_Main_UI_oequvq.png" alt="Main UI">
 
-* `development.json` affects the development environment
-* `test.json` affects the test environment, triggered in `yarn test` command.
-* `production.json` affects the production environment, triggered in
-`yarn build` command.
+### Update user profile
 
-Some environment variables are read and integrated in the template `config` object,
-including:
+Top section of the UI is profile view, you can click edit button to update your profile.
+<img src="https://res.cloudinary.com/soapbravowork/image/upload/v1602202708/Wiv%20Wiki/3_Edit_Profile_otryqh.png" alt="Edit profile">
 
-* `REACT_APP_PROVIDER_SOCKET` overriding `config[PROVIDER_SOCKET]`
-* `REACT_APP_DEVELOPMENT_KEYRING` overriding `config[DEVELOPMENT_KEYRING]`
+### Edit supply chain nodes
 
-More on [React environment variables](https://create-react-app.dev/docs/adding-custom-environment-variables).
+This is supply chain node editor.
+<img src="https://res.cloudinary.com/soapbravowork/image/upload/v1602202708/Wiv%20Wiki/4_Supply_chain_editor_p2qbva.png" alt="Supply chain editor">
 
-When writing and deploying your own front end, you should configure:
+Add new nodes by clicking `Add new node` button.
+<img src="https://res.cloudinary.com/soapbravowork/image/upload/v1602202708/Wiv%20Wiki/5_Supply_chain_add_new_node_ads5t6.png" alt="Add new node">
 
-* `CUSTOM_TYPES` in `src/config/common.json`. See
-  [Extending types](https://polkadot.js.org/api/start/types.extend.html).
-* `PROVIDER_SOCKET` in `src/config/production.json` pointing to your own
-  deployed node.
-* `DEVELOPMENT_KEYRING` in `src/config/common.json` be set to `false`.
-  See [Keyring](https://polkadot.js.org/api/start/keyring.html).
+Once you finished editing node, click `Save` button to save status to blockchain.
 
-### Specifying Connecting Node
+### Generate Token, Update Token
 
-There are two ways to specify it:
+This is Main token editor view.
+<img src="https://res.cloudinary.com/soapbravowork/image/upload/v1602202709/Wiv%20Wiki/8_Token_editor_gazdmh.png" alt="Token editor">
 
-* With `PROVIDER_SOCKET` in `{common, development, production}.json`.
-* With `rpc=<ws or wss connection>` query paramter after the URL. This overrides the above setting.
+You can click `Add` button to mint new token.
 
-## Reusable Components
+Once token is minted, you can see it added to the table.
+Click view icon to see details of the token.
 
-### useSubstrate Custom Hook
+Once token is selected, you can click `Edit` button to update token metadata.
+<img src="https://res.cloudinary.com/soapbravowork/image/upload/v1602202709/Wiv%20Wiki/9_Token_editor_edit_token_mniogf.png" alt="Token metadata editor">
 
-The custom hook `useSubstrate` provides access to the Polkadot js API and thus the
-keyring and the blockchain itself. Specifically it exposes this API.
+You can transfer to other user by clicking `Transfer` button.
 
-```js
-{
-  socket,
-  types,
-  keyring,
-  keyringState,
-  api,
-  apiState,
-}
-```
+### Edit user roles
 
-- `socket` - The remote provider socket it is connecting to.
-- `types` - The custom types used in the connected node.
-- `keyring` - A keyring of accounts available to the user.
-- `keyringState` - One of `"READY"` or `"ERROR"` states. `keyring` is valid
-only when `keyringState === "READY"`.
-- `api` - The remote api to the connected node.
-- `apiState` - One of `"CONNECTING"`, `"READY"`, or `"ERROR"` states. `api` is valid
-only when `apiState === "READY"`.
+This is user roles manager.
+<img src="https://res.cloudinary.com/soapbravowork/image/upload/v1602202708/Wiv%20Wiki/6_Roles_manager_xjbzuj.png" alt="User roles manager">
 
+You can add new role by clicking `Add`, or edit selected role by clicking `Edit` button.
+<img src="https://res.cloudinary.com/soapbravowork/image/upload/v1602202708/Wiv%20Wiki/7_Roles_manager_edit_role_eoanjs.png" alt="Edit role">
 
-### TxButton Component
-
-The [TxButton](./src/substrate-lib/components/TxButton.js) handles basic
-[query](https://polkadot.js.org/api/start/api.query.html) and
-[transaction](https://polkadot.js.org/api/start/api.tx.html) requests to the
-connected node. You can reuse this component for a wide variety of queries and
-transactions. See [src/Transfer.js](./src/Transfer.js) for a transaction example
-and [src/ChainState.js](./src/ChainState.js) for a query example.
-
-### Account Selector
-
-The [Account Selector](./src/AccountSelector.js) provides the user with a unified way to
-select their account from a keyring. If the Balances module is installed in the runtime,
-it also displays the user's token balance. It is included in the template already.
+You can find user's information by entering address to top search bar and click search icon
