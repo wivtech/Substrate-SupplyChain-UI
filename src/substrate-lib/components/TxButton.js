@@ -7,15 +7,15 @@ import { useSubstrate } from '../';
 import utils from '../utils';
 
 function TxButton ({
-  accountPair = null,
-  label,
-  setStatus,
-  color = 'blue',
-  style = null,
-  type = 'QUERY',
-  attrs = null,
-  disabled = false
-}) {
+                     accountPair = null,
+                     label,
+                     setStatus,
+                     color = 'blue',
+                     style = null,
+                     type = 'QUERY',
+                     attrs = null,
+                     disabled = false
+                   }) {
   // Hooks
   const { api } = useSubstrate();
   const [unsub, setUnsub] = useState(null);
@@ -33,7 +33,7 @@ function TxButton ({
 
   const loadSudoKey = () => {
     (async function () {
-      if (!api) { return; }
+      if (!api || !api.query.sudo) { return; }
       const sudoKey = await api.query.sudo.key();
       sudoKey.isEmpty ? setSudoKey(null) : setSudoKey(sudoKey.toString());
     })();
@@ -84,7 +84,7 @@ function TxButton ({
   const uncheckedSudoTx = async () => {
     const fromAcct = await getFromAcct();
     const txExecute =
-        api.tx.sudo.sudoUncheckedWeight(api.tx[palletRpc][callable](...inputParams), 0);
+      api.tx.sudo.sudoUncheckedWeight(api.tx[palletRpc][callable](...inputParams), 0);
 
     const unsub = txExecute.signAndSend(fromAcct, txResHandler)
       .catch(txErrHandler);
@@ -157,7 +157,15 @@ function TxButton ({
   const transformParams = (paramFields, inputParams, opts = { emptyAsNull: true }) => {
     // if `opts.emptyAsNull` is true, empty param value will be added to res as `null`.
     //   Otherwise, it will not be added
-    const paramVal = inputParams.map(inputParam => typeof inputParam === 'object' ? inputParam.value.trim() : inputParam.trim());
+    const paramVal = inputParams.map(inputParam => {
+      // To cater the js quirk that `null` is a type of `object`.
+      if (typeof inputParam === 'object' && inputParam !== null && typeof inputParam.value === 'string') {
+        return inputParam.value.trim();
+      } else if (typeof inputParam === 'string') {
+        return inputParam.trim();
+      }
+      return inputParam;
+    });
     const params = paramFields.map((field, ind) => ({ ...field, value: paramVal[ind] || null }));
 
     return params.reduce((memo, { type = 'string', value }) => {
@@ -212,14 +220,14 @@ function TxButton ({
       type='submit'
       onClick={transaction}
       disabled={ disabled || !palletRpc || !callable || !allParamsFilled() ||
-        ((isSudo() || isUncheckedSudo()) && !isSudoer(accountPair)) }
+      ((isSudo() || isUncheckedSudo()) && !isSudoer(accountPair)) }
     >
       {label}
     </Button>
   );
 }
 
-// prop typechecking
+// prop type checking
 TxButton.propTypes = {
   accountPair: PropTypes.object,
   setStatus: PropTypes.func.isRequired,

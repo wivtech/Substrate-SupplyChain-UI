@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Grid, Label, Icon } from 'semantic-ui-react';
-import { TxButton } from 'substrate-lib/components';
+import { TxButton } from './substrate-lib/components';
 
 export default function Main (props) {
   const [status, setStatus] = useState(null);
@@ -17,14 +17,12 @@ export default function Main (props) {
       <h1>Transfer</h1>
       <Form>
         <Form.Field>
-          <Label
-            basic
-            color='teal'
-          >
+          <Label basic color='teal'>
             <Icon name='hand point right' />
             1 Unit = 1000000000000
           </Label>
         </Form.Field>
+        <Form.Field>Transfer more than the existential amount for account with 0 balance</Form.Field>
         <Form.Field>
           <Input
             fluid
