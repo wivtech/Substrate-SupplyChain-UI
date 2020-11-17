@@ -11,12 +11,12 @@ import {
   Label
 } from 'semantic-ui-react';
 
-import { useSubstrate } from 'substrate-lib';
+import { useSubstrate } from './substrate-lib';
 
 function Main (props) {
   const { keyring } = useSubstrate();
-  const { setAccountAddress, selected } = props;
-  const [accountSelected, setAccountSelected] = useState(selected ? selected.address : '');
+  const { setAccountAddress } = props;
+  const [accountSelected, setAccountSelected] = useState('');
 
   // Get the list of accounts we possess the private key for
   const keyringOptions = keyring.getPairs().map(account => ({
@@ -26,8 +26,8 @@ function Main (props) {
     icon: 'user'
   }));
 
-  const initialAddress = selected ? selected.address
-    : (keyringOptions.length > 0 ? keyringOptions[0].value : '');
+  const initialAddress =
+    keyringOptions.length > 0 ? keyringOptions[0].value : '';
 
   // Set the initial address
   useEffect(() => {
@@ -54,7 +54,7 @@ function Main (props) {
     >
       <Container>
         <Menu.Menu>
-          <Image src='Substrate-Logo.png' size='mini' />
+          <Image src={`${process.env.PUBLIC_URL}/assets/substrate-logo.png`} size='mini' />
         </Menu.Menu>
         <Menu.Menu position='right' style={{ alignItems: 'center' }}>
           { !accountSelected
